@@ -1,3 +1,22 @@
+function enableContactDelete(){
+    (<HTMLButtonElement>document.getElementById("btn2")).disabled=false;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.add("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-dark");
+    let del=document.getElementsByName("contactsDelete");
+    let flag=true;
+    for(let i in del)
+    {
+        if(del[i].checked==true){
+            flag=false;
+        }
+    }
+    if(flag==true){
+        (<HTMLButtonElement>document.getElementById("btn2")).disabled=true;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
+    }
+
+}
 async function listContact() {
     document.getElementById("content").innerHTML="";
     let title=document.getElementById("titleOfMain");
@@ -10,7 +29,7 @@ async function listContact() {
     btn2.innerHTML="Delete";
     btn2.disabled=true;
     (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
     btn2.setAttribute("onclick","deleteContact()");
     //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/contacts'
   let uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
@@ -31,9 +50,9 @@ async function listContact() {
   let response = await fetch(req);
   let jsonData = await response.json();
   console.log(jsonData);
-  document.getElementById("content").innerHTML+=`<div class="row"><div class="col-lg-9" id="ticketCards"></div><div class="col-lg-3 " id="newContact"></div></div>`;
+  document.getElementById("content").innerHTML+=`<div class="row"><div class="col-md-9 col-lg-9 overflow-auto" id="ticketCards" style="height:90vh;"></div><div class="col-md-3 col-lg-3 " id="newContact"></div></div>`;
   document.getElementById("ticketCards").innerHTML+=`<table class="table">
-  <thead class="thead-light">
+  <thead class="thead-dark">
     <tr>
       <th scope="col"></th>
       <th scope="col">Contact</th>
@@ -43,7 +62,7 @@ async function listContact() {
       <th scope="col">Work Phone</th>
       <th scope="col">Time Zone</th>
       <th scope="col">Id</th>
-      <th scope="col">TWitter Id</th>
+      <th scope="col">Twitter Id</th>
     </tr>
   </thead>
   <tbody id="listOfContacts">
@@ -68,7 +87,7 @@ for(let i in jsonData){
 
 async function viewContact(id){
     (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
     let btn1=<HTMLButtonElement>document.getElementById("btn1");
     btn1.disabled=true;
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
@@ -238,21 +257,3 @@ async function deleteContact(){
     
 }
 
-function enableContactDelete(){
-    (<HTMLButtonElement>document.getElementById("btn2")).disabled=false;
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn-danger");
-    let del=document.getElementsByName("contactsDelete");
-    let flag=true;
-    for(let i in del)
-    {
-        if(del[i].checked==true){
-            flag=false;
-        }
-    }
-    if(flag==true){
-        (<HTMLButtonElement>document.getElementById("btn2")).disabled=true;
-    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
-    }
-
-}

@@ -39,6 +39,7 @@ window.onload = function () {
     getAPiKey();
 };
 var apiKey;
+var totalTicket;
 function dashBoard(ind) {
     return __awaiter(this, void 0, void 0, function () {
         var uri, h, encoded, auth, req, response, jsonData, unresolved, i;
@@ -74,6 +75,7 @@ function dashBoard(ind) {
                         alert(jsonData.code + "/n" + jsonData.message);
                     }
                     else {
+                        totalTicket = jsonData.length;
                         document.body.innerHTML = "";
                         templateBody();
                         unresolved = 0;
@@ -82,33 +84,82 @@ function dashBoard(ind) {
                                 unresolved++;
                             }
                         }
-                        document.getElementById("content").innerHTML = "\n        <div class=\"row\">\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title\">Total Tickets</h1>\n                    <h1>" + jsonData.length + "</h1>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title\">Unresolved Tickets</h1>\n                    <h1>" + unresolved + "</h1>\n                    </div>\n                </div>\n            </div>\n        </div>";
+                        document.getElementById("content").innerHTML = "\n        <div class=\"row\">\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title text-center bg-dark text-white\">Total Tickets</h1>\n                    <h1 class=\"text-center\" style=\"font-size:10vw;\">" + jsonData.length + "</h1>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title text-center bg-dark text-white\">Unresolved Tickets</h1>\n                    <h1 class=\"text-center\" style=\"font-size:10vw;\">" + unresolved + "</h1>\n                    </div>\n                </div>\n            </div>\n        </div>";
                     }
                     return [2 /*return*/];
             }
         });
     });
 }
+var currentPage = 1;
+function prevCurrentPage() {
+    if ((currentPage - 1) == 0) {
+        currentPage = 1;
+    }
+    else {
+        currentPage--;
+    }
+    getPage();
+}
+function nextCurrentPage() {
+    if ((currentPage + 1) >= (totalTicket / 5)) {
+        currentPage = (totalTicket / 5);
+    }
+    else {
+        currentPage++;
+    }
+    getPage();
+}
+function enableDelete() {
+    document.getElementById("btn2").disabled = false;
+    document.getElementById("btn2").classList.add("btn-danger");
+    document.getElementById("btn2").classList.remove("btn-dark");
+    var del = document.getElementsByName("deleteTicket");
+    var flag = true;
+    for (var i in del) {
+        if (del[i].checked == true) {
+            flag = false;
+        }
+    }
+    if (flag == true) {
+        document.getElementById("btn2").disabled = true;
+        document.getElementById("btn2").classList.remove("btn-danger");
+        document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
+    }
+}
 function listTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var title, btn1, btn2, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
+        var title, btn1, btn2;
+        return __generator(this, function (_a) {
+            document.getElementById("content").innerHTML = "";
+            title = document.getElementById("titleOfMain");
+            title.innerHTML = "Tickets";
+            btn1 = document.getElementById("btn1");
+            btn1.innerHTML = "+New Ticket";
+            btn1.disabled = false;
+            btn1.setAttribute("onclick", "getNewTicketTemplate()");
+            btn2 = document.getElementById("btn2");
+            btn2.innerHTML = "Delete";
+            btn2.disabled = true;
+            document.getElementById("btn2").classList.remove("btn-danger");
+            document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
+            btn2.setAttribute("onclick", "deleteTicket()");
+            //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/tickets?per_page=5&page=2' 
+            getPage();
+            return [2 /*return*/];
+        });
+    });
+}
+function getPage() {
+    return __awaiter(this, void 0, void 0, function () {
+        var status, priority, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     document.getElementById("content").innerHTML = "";
-                    title = document.getElementById("titleOfMain");
-                    title.innerHTML = "Tickets";
-                    btn1 = document.getElementById("btn1");
-                    btn1.innerHTML = "+New Ticket";
-                    btn1.disabled = false;
-                    btn1.setAttribute("onclick", "getNewTicketTemplate()");
-                    btn2 = document.getElementById("btn2");
-                    btn2.innerHTML = "Delete";
-                    btn2.disabled = true;
-                    document.getElementById("btn2").classList.remove("btn-danger");
-                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
-                    btn2.setAttribute("onclick", "deleteTicket()");
-                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
+                    status = [".", ".", "Open", "Pending", "Resolved", "Closed"];
+                    priority = [".", "Low", "Medium", "High", "Urgent"];
+                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets?per_page=5&page=" + currentPage;
                     h = new Headers();
                     h.append("Content-Type", "application/json");
                     encoded = window.btoa(apiKey);
@@ -127,11 +178,11 @@ function listTicket() {
                 case 2:
                     jsonData = _a.sent();
                     console.log(jsonData);
+                    document.getElementById("content").innerHTML += "<div class=\"row\"><div class=\"col-lg-8\" id=\"ticketCards\"></div><div class=\"col-lg-4 \" id=\"newTicket\"></div></div>\n    <div class=\"row \">\n        <div class=\"col-lg-4 text-center\">\n                <div class=\"btn-toolbar mb-2 mb-md-0\">\n                <div class=\"btn-group mr-2\">\n                    <button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" id=\"prev\" onclick=\"prevCurrentPage()\">Prev</button>\n                    <button type=\"button\" class=\"btn btn-sm btn-outline-secondary\" id=\"next\" onclick=\"nextCurrentPage()\">Next</button>\n                </div>\n            </div>\n        </div>\n    </div>";
                     for (i in jsonData) {
                         createdate = new Date(jsonData[i].created_at);
                         createtime = createdate.getUTCDate();
-                        document.getElementById("content").innerHTML += "<div class=\"row\"><div class=\"col-lg-8\" id=\"ticketCards\"></div><div class=\"col-lg-4 \" id=\"newTicket\"></div></div>";
-                        document.getElementById("ticketCards").innerHTML += "<div class=\"card mb-3\" style=\"max-width: 800px;\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\">\n            <input type=\"checkbox\" onclick=\"enableDelete()\" class=\"mx-auto\" value=\"" + jsonData[i].id + "\" name=\"deleteTicket\"></input>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"card-body\">\n            <a href=\"#\" style=\"text-decoration:none;\"><h5 class=\"card-title\" onclick=\"viewTicket(" + jsonData[i].id + ")\" id=\"ticketTitle\">" + jsonData[i].subject + "#" + jsonData[i].id + "</h5></a>\n                <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->\n                <p class=\"card-text\"><small class=\"text-muted\">Created at " + createdate + "</small></p>\n            </div>\n        </div>\n        <div class=\"col-md-3\">\n  \n        </div>\n    </div>\n  </div>";
+                        document.getElementById("ticketCards").innerHTML += "<div class=\"card mb-3 border border-dark\" style=\"max-width: 100%; \">\n      <div class=\"row no-gutters\">\n         <!-- <div class=\"col-md-1\">\n              <input type=\"checkbox\" onclick=\"enableDelete()\"  value=\"" + jsonData[i].id + "\" name=\"deleteTicket\" style=\"margin-top:65%;margin-left:50%;\"></input>\n          </div>\n          <div class=\"col-md-11 \">-->\n              <div class=\"card-body\">\n              <a href=\"#\"  style=\"text-decoration:none;\" ><input type=\"checkbox\" onclick=\"enableDelete()\"  value=\"" + jsonData[i].id + "\" name=\"deleteTicket\" ></input>\n              <h1 class=\"card-title\" onclick=\"viewTicket(" + jsonData[i].id + ")\" id=\"ticketTitle\" style=\"width:100%;\">\n              " + jsonData[i].subject + "#" + jsonData[i].id + "</h1>\n              </a>\n                  <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->\n                  <p class=\"card-text\"><small class=\"text-muted\">Created at " + createdate + "</small></p>\n                  <p>Status: " + status[jsonData[i].status] + " &emsp;&emsp;&emsp;&emsp;&emsp; Priority: " + priority[jsonData[i].priority] + "</p>\n              </div>\n          </div>\n      </div>\n    </div>";
                     }
                     return [2 /*return*/];
             }
@@ -296,7 +347,7 @@ function viewTicket(id) {
             switch (_a.label) {
                 case 0:
                     document.getElementById("btn2").classList.remove("btn-danger");
-                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
+                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
                     btn1 = document.getElementById("btn1");
                     btn1.disabled = true;
                     btn2 = document.getElementById("btn2");
@@ -335,26 +386,10 @@ function viewTicket(id) {
                             tempstr += jsonData.cc_emails[i] + ", ";
                         }
                     }
-                    document.getElementById("content").innerHTML = "<div class=\"row\" >\n             <div class=\"col-lg-8\" >\n             <div class=\"card\">\n                <div class=\"card-header\">\n                   " + jsonData.subject + "\n                   <footer class=\"blockquote-footer\"> <cite title=\"Source Title\">" + jsonData.requester.name + "</cite>  reported via the portal </footer>\n                    </blockquote>\n                   <footer class=\"blockquote-footer\">Last updated at <cite title=\"Source Title\">" + updatedDate + "</cite></footer>\n                    </blockquote>\n                </div>\n                <div class=\"card-body\">\n                    <blockquote class=\"blockquote mb-0\">\n                    <p>Description: " + jsonData.description_text + "</p>\n                    <p>Requester ID: " + jsonData.requester_id + "</p>\n                    <p>Status: " + status[jsonData.status] + " &emsp;&emsp;&emsp;&emsp;&emsp; Priority: " + priority[jsonData.priority] + "</p>\n                    <p>CC-Emails: " + tempstr + "</p>\n                   \n                    \n                </div>\n                </div>\n             </div>\n             <div class=\"col-lg-4\" id=\"viewTicketCard\">\n             </div>\n             </div>";
+                    document.getElementById("content").innerHTML = "<div class=\"row\" >\n             <div class=\"col-lg-8\" >\n             <div class=\"card\">\n                <div class=\"card-header bg-dark text-white\">\n                   <h1>" + jsonData.subject + "</h1>\n                   <footer class=\"blockquote-footer\"> <cite title=\"Source Title\">" + jsonData.requester.name + "</cite>  reported via the portal </footer>\n                    </blockquote>\n                   <footer class=\"blockquote-footer\">Last updated at <cite title=\"Source Title\">" + updatedDate + "</cite></footer>\n                    </blockquote>\n                </div>\n                <div class=\"card-body\">\n                    <blockquote class=\"blockquote mb-0\">\n                    <p>Description: " + jsonData.description_text + "</p>\n                    <p>Requester ID: " + jsonData.requester_id + "</p>\n                    <p>Status: " + status[jsonData.status] + " &emsp;&emsp;&emsp;&emsp;&emsp; Priority: " + priority[jsonData.priority] + "</p>\n                    <p>CC-Emails: " + tempstr + "</p>\n                   \n                    \n                </div>\n                </div>\n             </div>\n             <div class=\"col-lg-4\" id=\"viewTicketCard\">\n             </div>\n             </div>";
                     btn2.setAttribute("onclick", "getUpdateTemplate(" + jsonData.id + ")");
                     return [2 /*return*/];
             }
         });
     });
-}
-function enableDelete() {
-    document.getElementById("btn2").disabled = false;
-    document.getElementById("btn2").setAttribute("class", "btn-danger");
-    var del = document.getElementsByName("deleteTicket");
-    var flag = true;
-    for (var i in del) {
-        if (del[i].checked == true) {
-            flag = false;
-        }
-    }
-    if (flag == true) {
-        document.getElementById("btn2").disabled = true;
-        document.getElementById("btn2").classList.remove("btn-danger");
-        document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
-    }
 }

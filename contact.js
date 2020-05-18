@@ -34,6 +34,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+function enableContactDelete() {
+    document.getElementById("btn2").disabled = false;
+    document.getElementById("btn2").classList.add("btn-danger");
+    document.getElementById("btn2").classList.remove("btn-dark");
+    var del = document.getElementsByName("contactsDelete");
+    var flag = true;
+    for (var i in del) {
+        if (del[i].checked == true) {
+            flag = false;
+        }
+    }
+    if (flag == true) {
+        document.getElementById("btn2").disabled = true;
+        document.getElementById("btn2").classList.remove("btn-danger");
+        document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
+    }
+}
 function listContact() {
     return __awaiter(this, void 0, void 0, function () {
         var title, btn1, btn2, uri, h, encoded, auth, req, response, jsonData, i;
@@ -51,7 +68,7 @@ function listContact() {
                     btn2.innerHTML = "Delete";
                     btn2.disabled = true;
                     document.getElementById("btn2").classList.remove("btn-danger");
-                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
+                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
                     btn2.setAttribute("onclick", "deleteContact()");
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
                     h = new Headers();
@@ -74,8 +91,8 @@ function listContact() {
                 case 2:
                     jsonData = _a.sent();
                     console.log(jsonData);
-                    document.getElementById("content").innerHTML += "<div class=\"row\"><div class=\"col-lg-9\" id=\"ticketCards\"></div><div class=\"col-lg-3 \" id=\"newContact\"></div></div>";
-                    document.getElementById("ticketCards").innerHTML += "<table class=\"table\">\n  <thead class=\"thead-light\">\n    <tr>\n      <th scope=\"col\"></th>\n      <th scope=\"col\">Contact</th>\n      <th scope=\"col\">Title</th>\n      <th scope=\"col\">Company</th>\n      <th scope=\"col\">Email</th>\n      <th scope=\"col\">Work Phone</th>\n      <th scope=\"col\">Time Zone</th>\n      <th scope=\"col\">Id</th>\n      <th scope=\"col\">TWitter Id</th>\n    </tr>\n  </thead>\n  <tbody id=\"listOfContacts\">\n    \n  </tbody>\n</table>";
+                    document.getElementById("content").innerHTML += "<div class=\"row\"><div class=\"col-md-9 col-lg-9 overflow-auto\" id=\"ticketCards\" style=\"height:90vh;\"></div><div class=\"col-md-3 col-lg-3 \" id=\"newContact\"></div></div>";
+                    document.getElementById("ticketCards").innerHTML += "<table class=\"table\">\n  <thead class=\"thead-dark\">\n    <tr>\n      <th scope=\"col\"></th>\n      <th scope=\"col\">Contact</th>\n      <th scope=\"col\">Title</th>\n      <th scope=\"col\">Company</th>\n      <th scope=\"col\">Email</th>\n      <th scope=\"col\">Work Phone</th>\n      <th scope=\"col\">Time Zone</th>\n      <th scope=\"col\">Id</th>\n      <th scope=\"col\">Twitter Id</th>\n    </tr>\n  </thead>\n  <tbody id=\"listOfContacts\">\n    \n  </tbody>\n</table>";
                     for (i in jsonData) {
                         document.getElementById("listOfContacts").innerHTML += "\n  <tr>\n  <th scope=\"row\"><input type=\"checkbox\" name=\"contactsDelete\" value=\"" + jsonData[i].id + "\" onclick=\"enableContactDelete()\"/></th>\n  <td><a href=\"#\" ><span onclick=\"viewContact(" + jsonData[i].id + ")\">" + jsonData[i].name + "</span></a></td>\n  <td>" + jsonData[i].job_title + "</td>\n  <td>" + jsonData[i].company_id + "</td>\n  <td>" + jsonData[i].email + "</td>\n  <td>" + jsonData[i].phone + "</td>\n  <td>" + jsonData[i].time_zone + "</td>\n  <td>" + jsonData[i].id + "</td>\n  <td>" + jsonData[i].twitter_id + "</td>\n</tr>";
                     }
@@ -91,7 +108,7 @@ function viewContact(id) {
             switch (_a.label) {
                 case 0:
                     document.getElementById("btn2").classList.remove("btn-danger");
-                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
+                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
                     btn1 = document.getElementById("btn1");
                     btn1.disabled = true;
                     btn2 = document.getElementById("btn2");
@@ -268,20 +285,4 @@ function deleteContact() {
             }
         });
     });
-}
-function enableContactDelete() {
-    document.getElementById("btn2").disabled = false;
-    document.getElementById("btn2").setAttribute("class", "btn-danger");
-    var del = document.getElementsByName("contactsDelete");
-    var flag = true;
-    for (var i in del) {
-        if (del[i].checked == true) {
-            flag = false;
-        }
-    }
-    if (flag == true) {
-        document.getElementById("btn2").disabled = true;
-        document.getElementById("btn2").classList.remove("btn-danger");
-        document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
-    }
 }

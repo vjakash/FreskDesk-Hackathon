@@ -3,6 +3,7 @@ window.onload=()=>{
     getAPiKey();
 }
 let apiKey;
+let totalTicket;
 async function dashBoard(ind){
     console.log("hi");
     if(ind==1){
@@ -33,6 +34,7 @@ async function dashBoard(ind){
         alert(jsonData.code+"/n"+ jsonData.message);
     }
     else{
+        totalTicket=jsonData.length;
         document.body.innerHTML="";
         templateBody();
         let unresolved=0;
@@ -46,31 +48,65 @@ async function dashBoard(ind){
             <div class="col-lg-6">
                     <div class="card" style="width: 100%;">
                     <div class="card-body">
-                    <h1 class="card-title">Total Tickets</h1>
-                    <h1>${jsonData.length}</h1>
+                    <h1 class="card-title text-center bg-dark text-white">Total Tickets</h1>
+                    <h1 class="text-center" style="font-size:10vw;">${jsonData.length}</h1>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                     <div class="card" style="width: 100%;">
                     <div class="card-body">
-                    <h1 class="card-title">Unresolved Tickets</h1>
-                    <h1>${unresolved}</h1>
+                    <h1 class="card-title text-center bg-dark text-white">Unresolved Tickets</h1>
+                    <h1 class="text-center" style="font-size:10vw;">${unresolved}</h1>
                     </div>
                 </div>
             </div>
         </div>`;
     }
+}
+let currentPage=1;
+function prevCurrentPage(){
+    if((currentPage-1)==0){
+        currentPage=1;
+    }
+    else{
+        currentPage--;
+    }
+    getPage();
     
+}
+function nextCurrentPage(){
+    if((currentPage+1)>=(totalTicket/5)){
+          currentPage=(totalTicket/5);
+     }
+    else{
+         currentPage++;
+        }
+        getPage();
 
-
-     
-
-
-  
+    
+    
+}
+function enableDelete(){
+    
+    (<HTMLButtonElement>document.getElementById("btn2")).disabled=false;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.add("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-dark");
+    let del=document.getElementsByName("deleteTicket");
+    let flag=true;
+    for(let i in del)
+    {
+        if(del[i].checked==true){
+            flag=false;
+        }
+    }
+    if(flag==true){
+        (<HTMLButtonElement>document.getElementById("btn2")).disabled=true;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
+    }
 
 }
-
 async function listTicket() {
     document.getElementById("content").innerHTML="";
     let title=document.getElementById("titleOfMain");
@@ -83,52 +119,70 @@ async function listTicket() {
     btn2.innerHTML="Delete";
     btn2.disabled=true;
     (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
     btn2.setAttribute("onclick","deleteTicket()");
-    //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/tickets'
-  let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
-  let h = new Headers();
-  h.append("Content-Type", "application/json");
-//   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
-  let encoded = window.btoa(apiKey);
-  let auth = `Basic ${encoded}`;
-  h.append("Authorization", auth);
-//  h.append("Origin","https://vjakash.github.io/Hackathon/?");
- // h.append("Host","vjakash.github.io/Hackathon/")
-  let req = new Request(uri, {
-    method: "GET",
-    headers: h,
-    credentials: "omit",
-    mode:"cors"
-  });
-  let response = await fetch(req);
-  let jsonData = await response.json();
-  console.log(jsonData);
-
-for(let i in jsonData){
-    let createdate=new Date(jsonData[i].created_at);
-    let createtime=createdate.getUTCDate();
-    document.getElementById("content").innerHTML+=`<div class="row"><div class="col-lg-8" id="ticketCards"></div><div class="col-lg-4 " id="newTicket"></div></div>`;
-    document.getElementById("ticketCards").innerHTML+=`<div class="card mb-3" style="max-width: 800px;">
-    <div class="row no-gutters">
-        <div class="col-md-1">
-            <input type="checkbox" onclick="enableDelete()" class="mx-auto" value="${jsonData[i].id}" name="deleteTicket"></input>
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-            <a href="#" style="text-decoration:none;"><h5 class="card-title" onclick="viewTicket(${jsonData[i].id})" id="ticketTitle">${jsonData[i].subject}#${jsonData[i].id}</h5></a>
-                <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
-                <p class="card-text"><small class="text-muted">Created at ${createdate}</small></p>
+    //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/tickets?per_page=5&page=2' 
+    getPage();
+  
+}
+async function getPage(){
+    document.getElementById("content").innerHTML="";
+    let status=[".",".","Open","Pending","Resolved","Closed"];
+    let priority=[".","Low","Medium","High","Urgent"];
+    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets?per_page=5&page="+currentPage;
+    let h = new Headers();
+    h.append("Content-Type", "application/json");
+  //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+    let encoded = window.btoa(apiKey);
+    let auth = `Basic ${encoded}`;
+    h.append("Authorization", auth);
+  //  h.append("Origin","https://vjakash.github.io/Hackathon/?");
+   // h.append("Host","vjakash.github.io/Hackathon/")
+    let req = new Request(uri, {
+      method: "GET",
+      headers: h,
+      credentials: "omit",
+      mode:"cors"
+    });
+    let response = await fetch(req);
+    let jsonData = await response.json();
+    console.log(jsonData);
+    document.getElementById("content").innerHTML+=`<div class="row"><div class="col-lg-8" id="ticketCards"></div><div class="col-lg-4 " id="newTicket"></div></div>
+    <div class="row ">
+        <div class="col-lg-4 text-center">
+                <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()">Prev</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()">Next</button>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-  
-        </div>
-    </div>
-  </div>`;
-}
-}
+    </div>`;
+  for(let i in jsonData){
+      let createdate=new Date(jsonData[i].created_at);
+      let createtime=createdate.getUTCDate();
+      
+      document.getElementById("ticketCards").innerHTML+=`<div class="card mb-3 border border-dark" style="max-width: 100%; ">
+      <div class="row no-gutters">
+         <!-- <div class="col-md-1">
+              <input type="checkbox" onclick="enableDelete()"  value="${jsonData[i].id}" name="deleteTicket" style="margin-top:65%;margin-left:50%;"></input>
+          </div>
+          <div class="col-md-11 ">-->
+              <div class="card-body">
+              <a href="#"  style="text-decoration:none;" ><input type="checkbox" onclick="enableDelete()"  value="${jsonData[i].id}" name="deleteTicket" ></input>
+              <h1 class="card-title" onclick="viewTicket(${jsonData[i].id})" id="ticketTitle" style="width:100%;">
+              ${jsonData[i].subject}#${jsonData[i].id}</h1>
+              </a>
+                  <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
+                  <p class="card-text"><small class="text-muted">Created at ${createdate}</small></p>
+                  <p>Status: ${status[jsonData[i].status]} &emsp;&emsp;&emsp;&emsp;&emsp; Priority: ${priority[jsonData[i].priority]}</p>
+              </div>
+          </div>
+      </div>
+    </div>`;
+  }
 
+}
 async function createTicket() {
     let description=(<HTMLInputElement>document.getElementById("description")).value;
     let type=(<HTMLInputElement>document.getElementById("newContactType")).value;
@@ -238,7 +292,7 @@ async function deleteTicket(){
             method: "DELETE",
             headers: h,
             credentials: "omit",
-    mode:"cors"
+            mode:"cors"
             });
             let response = await fetch(req);
             // let jsonData = await response.json();
@@ -253,7 +307,7 @@ async function deleteTicket(){
 }
 async function viewTicket(id){
     (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
     let btn1=<HTMLButtonElement>document.getElementById("btn1");
     btn1.disabled=true;
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
@@ -273,7 +327,7 @@ async function viewTicket(id){
             method: "GET",
             headers: h,
             credentials: "omit",
-    mode:"cors"
+            mode:"cors"
             });
             let response = await fetch(req);
              let jsonData = await response.json();
@@ -293,8 +347,8 @@ async function viewTicket(id){
              document.getElementById("content").innerHTML=`<div class="row" >
              <div class="col-lg-8" >
              <div class="card">
-                <div class="card-header">
-                   ${jsonData.subject}
+                <div class="card-header bg-dark text-white">
+                   <h1>${jsonData.subject}</h1>
                    <footer class="blockquote-footer"> <cite title="Source Title">${jsonData.requester.name}</cite>  reported via the portal </footer>
                     </blockquote>
                    <footer class="blockquote-footer">Last updated at <cite title="Source Title">${updatedDate}</cite></footer>
@@ -315,24 +369,4 @@ async function viewTicket(id){
              </div>
              </div>`;
              btn2.setAttribute("onclick",`getUpdateTemplate(${jsonData.id})`);
-
-
-}
-function enableDelete(){
-    (<HTMLButtonElement>document.getElementById("btn2")).disabled=false;
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn-danger");
-    let del=document.getElementsByName("deleteTicket");
-    let flag=true;
-    for(let i in del)
-    {
-        if(del[i].checked==true){
-            flag=false;
-        }
-    }
-    if(flag==true){
-        (<HTMLButtonElement>document.getElementById("btn2")).disabled=true;
-    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
-    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
-    }
-
 }

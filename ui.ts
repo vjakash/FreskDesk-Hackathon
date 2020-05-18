@@ -1,34 +1,36 @@
 function templateBody() {
   let str = ` <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Fresh Desk </a>
+    <a class="navbar-brand col-8 col-md-2 col-lg-1 mr-0 px-3 text-right" href="#">Fresh Desk </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#" onclick=" getAPiKey();">Sign out</a>
+            <a class="nav-link" href="#" onclick=" getAPiKey();"><span class="material-icons" title="Sign Out">
+            power_settings_new
+            </span></a>
         </li>
     </ul>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-1 d-md-block bg-dark text-white sidebar collapse" style="height: 100vh;">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-1 d-md-block bg-dark text-white sidebar collapse" style="height: 175vh;">
             <div class="sidebar-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active astyle" href="#">
-                            <span onclick="dashBoard(0)"> Dashboard </span>
+                        <a class="nav-link active astyle" href="#" onclick="dashBoard(0)">
+                            <span > Dashboard </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link astyle" href="#">
-                            <span class="material-icons" onclick="listTicket()" data-toggle="tooltip" data-placement="right" title="Tickets">confirmation_number</span>
+                        <a class="nav-link astyle" href="#"  onclick="listTicket()">
+                            <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Tickets">confirmation_number</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link astyle" href="#">
-                            <span class="material-icons" onclick="listContact()" data-toggle="tooltip" data-placement="right" title="Contacts">perm_contact_calendar</span>
+                        <a class="nav-link astyle" href="#" onclick="listContact()">
+                            <span class="material-icons"  data-toggle="tooltip" data-placement="right" title="Contacts">perm_contact_calendar</span>
                         </a>
                     </li>
 
@@ -41,8 +43,8 @@ function templateBody() {
                 <h1 class="h2" id="titleOfMain">Dashboard</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn1">-</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn2">-</button>
+                        <button type="button" class="btn btn-sm btn-dark" id="btn1">-</button>
+                        <button type="button" class="btn btn-sm btn-dark" id="btn2">-</button>
                     </div>
                 </div>
             </div>
@@ -439,7 +441,7 @@ document.body.innerHTML=`<div class="container-fluid text-center bg-dark text-wh
         <h1>Please Enter API key</h1><br>
         <form onsubmit="dashBoard(1);return false;">
         <input type=" text " class="form-control " id="apikey" placeholder="API KEY " aria-label="Username " aria-describedby="addon-wrapping " required><br>
-        <button type="button "class="btn btn-primary ">Log In</button>
+        <button type="button "class="btn btn-success ">Log In</button>
         </form>
     </div>
     <div class="col-lg-3 "></div>
