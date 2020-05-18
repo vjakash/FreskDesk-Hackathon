@@ -3,7 +3,7 @@ async function listTicket() {
   let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
   let h = new Headers();
   h.append("Content-Type", "application/json");
-  let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+  let encoded = window.btoa("vjbakash:Idontno@2");
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
   let req = new Request(uri, {
@@ -77,4 +77,4 @@ async function deleteTicket(){
      let jsonData = await response.json();
      console.log(response);
 }
-deleteTicket();
+listTicket();

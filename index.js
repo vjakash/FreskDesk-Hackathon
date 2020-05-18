@@ -43,7 +43,7 @@ function listTicket() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa("vjbakash:Idontno@2");
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -127,7 +127,7 @@ function updateTicket() {
 }
 function deleteTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var uri, h, encoded, auth, req, response;
+        var uri, h, encoded, auth, req, response, jsonData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -144,11 +144,13 @@ function deleteTicket() {
                     return [4 /*yield*/, fetch(req)];
                 case 1:
                     response = _a.sent();
-                    // let jsonData = await response.json();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    jsonData = _a.sent();
                     console.log(response);
                     return [2 /*return*/];
             }
         });
     });
 }
-deleteTicket();
+listTicket();
