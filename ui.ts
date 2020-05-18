@@ -285,7 +285,7 @@ function getNewContactTemplate() {
                   <div class="input-group-prepend">
                       <span class="input-group-text">@</span>
                   </div>
-                  <input type="text" class="form-control" id="email" placeholder="abc@freshdesk.com" required>
+                  <input type="email" class="form-control" id="email" placeholder="abc@freshdesk.com" required>
                   <div class="invalid-feedback" style="width: 100%;">
                       Contact is required.
                   </div>
