@@ -8,8 +8,9 @@ async function listTicket() {
     let btn1=document.getElementById("btn1");
     btn1.innerHTML="+New Ticket";
     btn1.setAttribute("onclick","getNewTicketTemplate()");
-    let btn2=document.getElementById("btn2");
+    let btn2=<HTMLButtonElement>document.getElementById("btn2");
     btn2.innerHTML="Delete";
+    btn2.disabled=true;
     btn2.setAttribute("onclick","deleteTicket()");
     //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/tickets'
   let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
@@ -25,19 +26,20 @@ async function listTicket() {
   });
   let response = await fetch(req);
   let jsonData = await response.json();
-  console.log(jsonData[0].created_at);
+  console.log(jsonData);
 
 for(let i in jsonData){
     let createdate=new Date(jsonData[i].created_at);
     let createtime=createdate.getUTCDate();
-    document.getElementById("content").innerHTML+=`<div class="card mb-3" style="max-width: 800px;">
+    document.getElementById("content").innerHTML+=`<div class="row"><div class="col-lg-8" id="ticketCards"></div><div class="col-lg-4 " id="newTicket"></div></div>`;
+    document.getElementById("ticketCards").innerHTML+=`<div class="card mb-3" style="max-width: 800px;">
     <div class="row no-gutters">
         <div class="col-md-1">
-            <input type="checkbox" onclick="" class="mx-auto" value="${jsonData[i].id}"></input>
+            <input type="checkbox" onclick="enableDelete()" class="mx-auto" value="${jsonData[i].id}" name="deleteTicket"></input>
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">${jsonData[i].subject}#${jsonData[i].id}</h5>
+            <a href="#" style="text-decoration:none;"><h5 class="card-title" onclick="viewTicket(${jsonData[i].id})" id="ticketTitle">${jsonData[i].subject}#${jsonData[i].id}</h5></a>
                 <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->
                 <p class="card-text"><small class="text-muted">Created at ${createdate}</small></p>
             </div>
@@ -52,6 +54,7 @@ for(let i in jsonData){
 
 async function createTicket() {
     let description=(<HTMLInputElement>document.getElementById("description")).value;
+    let type=(<HTMLInputElement>document.getElementById("newContactType")).value;
     let subject=(<HTMLInputElement>document.getElementById("subject")).value;
     let email=(<HTMLInputElement>document.getElementById("contact")).value;
     let priority=Number((<HTMLSelectElement>document.getElementById("newContactPriority")).value);
@@ -60,7 +63,7 @@ async function createTicket() {
     /*curl -v -u user@yourcompany.com:test -H "Content-Type: application/json" 
     -d '{ "description": "Details about the issue...", "subject": "Support Needed...", "email": "tom@outerspace.com", "priority": 1, "status": 2, "cc_emails": ["ram@freshdesk.com","diana@freshdesk.com"] }'
      -X POST 'https://domain.freshdesk.com/api/v2/tickets'*/
-  let data =JSON.stringify({description,subject,email,priority,status,cc_emails});
+  let data =JSON.stringify({description,subject,email,priority,status,cc_emails,type});
 
   let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
   let h = new Headers();
@@ -79,12 +82,43 @@ async function createTicket() {
   console.log(jsonData);
   listTicket();
 }
-async function updateTicket(){
+async function updateTicket(id){
+    let description=(<HTMLInputElement>document.getElementById("description")).value;
+    let type=(<HTMLInputElement>document.getElementById("newContactType")).value;
+    let subject=(<HTMLInputElement>document.getElementById("subject")).value;
+    let email=(<HTMLInputElement>document.getElementById("contact")).value;
+    let priority=Number((<HTMLSelectElement>document.getElementById("newContactPriority")).value);
+    let status=Number((<HTMLSelectElement>document.getElementById("newContactStatus")).value);
+    let cc_emails=(<HTMLInputElement>document.getElementById("ccEmail")).value.split(";");
+    let arr=[description,subject,email,priority,status,cc_emails];
+    let obj={};
+    if(description!=""){
+        obj["description"]=description;
+    }
+    if(subject!=""){
+        obj["subject"]=subject;
+    }
+    if(email!=""){
+        obj["email"]=email;
+    }
+    if(priority!=0){
+        obj["priority"]=priority;
+    }
+    if(status!=0){
+        obj["status"]=status;
+    }
+    if(cc_emails.length!=0&&cc_emails[0]!=""){
+        obj["cc_emails"]=cc_emails;
+    }
+    if(type!=""){
+        obj["type"]=type;
+    }
+    console.log(obj);
     /*curl -v -u user@yourcompany.com:test -H "Content-Type: application/json" 
     -X PUT -d '{ "priority":2, "status":3 }' 'https://domain.freshdesk.com/api/v2/tickets/1'*/ 
     ///api/v2/tickets/[id] 
-    let data = '{ "priority":2, "status":3 }';
-  let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/8";
+    // let data = '{ "priority":2, "status":3 }';
+  let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+id;
   let h = new Headers();
   h.append("Content-Type", "application/json");
   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -93,28 +127,115 @@ async function updateTicket(){
   let req = new Request(uri, {
     method: "PUT",
     headers: h,
-    body:data,
+    body:JSON.stringify(obj),
     credentials: "omit",
   });
   let response = await fetch(req);
   let jsonData = await response.json();
   console.log(jsonData);
-  let str=getNewTicketTemplate();
+  viewTicket(id);
 }
 async function deleteTicket(){
+    let del=document.getElementsByName("deleteTicket");
+    for(let i in del)
+    {
+        if(del[i].checked==true){
+            
+            let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+del[i].value;
+            let h = new Headers();
+            let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            let auth = `Basic ${encoded}`;
+            h.append("Authorization", auth);
+            let req = new Request(uri, {
+            method: "DELETE",
+            headers: h,
+            credentials: "omit",
+            });
+            let response = await fetch(req);
+            // let jsonData = await response.json();
+             console.log(response);
+        }
+        console.log(del[i].checked);
+    }
+    listTicket();
     // "/api/v2/tickets/[id] "
     //curl -v -u user@yourcompany.com:test -X DELETE 'https://domain.freshdesk.com/api/v2/tickets/1'
-    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/9";
-    let h = new Headers();
-    let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
-    let auth = `Basic ${encoded}`;
-    h.append("Authorization", auth);
-    let req = new Request(uri, {
-      method: "DELETE",
-      headers: h,
-      credentials: "omit",
-    });
-    let response = await fetch(req);
-     let jsonData = await response.json();
-     console.log(response);
+    
+}
+async function viewTicket(id){
+    let btn2=<HTMLButtonElement>document.getElementById("btn2");
+    btn2.disabled=false;
+    btn2.innerHTML="Update Ticket";
+    let status=[".",".","Open","Pending","Resolved","Closed"];
+    let priority=[".","Low","Medium","High","Urgent"];
+    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+String(id)+"?include=requester";
+            let h = new Headers();
+            let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            let auth = `Basic ${encoded}`;
+            h.append("Authorization", auth);
+            let req = new Request(uri, {
+            method: "GET",
+            headers: h,
+            credentials: "omit",
+            });
+            let response = await fetch(req);
+             let jsonData = await response.json();
+             console.log(jsonData);
+             let updatedDate=new Date(jsonData.updated_at);
+             let updatedTime=updatedDate.getUTCDate();
+             let tempstr="";
+             for(let i in jsonData.cc_emails){
+                 if(i==String(jsonData.cc_emails.length-1)){
+                    tempstr+=`${jsonData.cc_emails[i]}`;
+                 }
+                 else{
+                    tempstr+=`${jsonData.cc_emails[i]}, `;
+                 }
+                
+             }
+             document.getElementById("content").innerHTML=`<div class="row" >
+             <div class="col-lg-8" >
+             <div class="card">
+                <div class="card-header">
+                   ${jsonData.subject}
+                   <footer class="blockquote-footer"> <cite title="Source Title">${jsonData.requester.name}</cite>  reported via the portal </footer>
+                    </blockquote>
+                   <footer class="blockquote-footer">Last updated at <cite title="Source Title">${updatedDate}</cite></footer>
+                    </blockquote>
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                    <p>Description: ${jsonData.description_text}</p>
+                    <p>Requester ID: ${jsonData.requester_id}</p>
+                    <p>Status: ${status[jsonData.status]} &emsp;&emsp;&emsp;&emsp;&emsp; Priority: ${priority[jsonData.priority]}</p>
+                    <p>CC-Emails: ${tempstr}</p>
+                   
+                    
+                </div>
+                </div>
+             </div>
+             <div class="col-lg-4" id="viewTicketCard">
+             </div>
+             </div>`;
+             btn2.setAttribute("onclick",`getUpdateTemplate(${jsonData.id})`);
+
+
+}
+function enableDelete(){
+    (<HTMLButtonElement>document.getElementById("btn2")).disabled=false;
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn-danger");
+    let del=document.getElementsByName("deleteTicket");
+    let flag=true;
+    for(let i in del)
+    {
+        if(del[i].checked==true){
+            flag=false;
+        }
+    }
+    if(flag==true){
+        (<HTMLButtonElement>document.getElementById("btn2")).disabled=true;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
+    }
+
 }

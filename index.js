@@ -39,7 +39,7 @@ window.onload = function () {
 };
 function listTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var title, btn1, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
+        var title, btn1, btn2, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -49,6 +49,10 @@ function listTicket() {
                     btn1 = document.getElementById("btn1");
                     btn1.innerHTML = "+New Ticket";
                     btn1.setAttribute("onclick", "getNewTicketTemplate()");
+                    btn2 = document.getElementById("btn2");
+                    btn2.innerHTML = "Delete";
+                    btn2.disabled = true;
+                    btn2.setAttribute("onclick", "deleteTicket()");
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
@@ -66,11 +70,12 @@ function listTicket() {
                     return [4 /*yield*/, response.json()];
                 case 2:
                     jsonData = _a.sent();
-                    console.log(jsonData[0].created_at);
+                    console.log(jsonData);
                     for (i in jsonData) {
                         createdate = new Date(jsonData[i].created_at);
                         createtime = createdate.getUTCDate();
-                        document.getElementById("content").innerHTML += "<div class=\"card mb-3\" style=\"max-width: 800px;\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\">\n            <input type=\"checkbox\" onclick=\"\" class=\"mx-auto\" value=\"\"></input>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">" + jsonData[i].subject + "#" + jsonData[i].id + "</h5>\n                <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->\n                <p class=\"card-text\"><small class=\"text-muted\">Created at " + createdate + "</small></p>\n            </div>\n        </div>\n        <div class=\"col-md-3\">\n  \n        </div>\n    </div>\n  </div>";
+                        document.getElementById("content").innerHTML += "<div class=\"row\"><div class=\"col-lg-8\" id=\"ticketCards\"></div><div class=\"col-lg-4 \" id=\"newTicket\"></div></div>";
+                        document.getElementById("ticketCards").innerHTML += "<div class=\"card mb-3\" style=\"max-width: 800px;\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\">\n            <input type=\"checkbox\" onclick=\"enableDelete()\" class=\"mx-auto\" value=\"" + jsonData[i].id + "\" name=\"deleteTicket\"></input>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"card-body\">\n            <a href=\"#\" style=\"text-decoration:none;\"><h5 class=\"card-title\" onclick=\"viewTicket(" + jsonData[i].id + ")\" id=\"ticketTitle\">" + jsonData[i].subject + "#" + jsonData[i].id + "</h5></a>\n                <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->\n                <p class=\"card-text\"><small class=\"text-muted\">Created at " + createdate + "</small></p>\n            </div>\n        </div>\n        <div class=\"col-md-3\">\n  \n        </div>\n    </div>\n  </div>";
                     }
                     return [2 /*return*/];
             }
@@ -79,17 +84,18 @@ function listTicket() {
 }
 function createTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var description, subject, email, priority, status, cc_emails, data, uri, h, encoded, auth, req, response, jsonData;
+        var description, type, subject, email, priority, status, cc_emails, data, uri, h, encoded, auth, req, response, jsonData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     description = document.getElementById("description").value;
+                    type = document.getElementById("newContactType").value;
                     subject = document.getElementById("subject").value;
                     email = document.getElementById("contact").value;
                     priority = Number(document.getElementById("newContactPriority").value);
                     status = Number(document.getElementById("newContactStatus").value);
                     cc_emails = document.getElementById("ccEmail").value.split(";");
-                    data = JSON.stringify({ description: description, subject: subject, email: email, priority: priority, status: status, cc_emails: cc_emails });
+                    data = JSON.stringify({ description: description, subject: subject, email: email, priority: priority, status: status, cc_emails: cc_emails, type: type });
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
@@ -115,14 +121,44 @@ function createTicket() {
         });
     });
 }
-function updateTicket() {
+function updateTicket(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var data, uri, h, encoded, auth, req, response, jsonData, str;
+        var description, type, subject, email, priority, status, cc_emails, arr, obj, uri, h, encoded, auth, req, response, jsonData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    data = '{ "priority":2, "status":3 }';
-                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets/8";
+                    description = document.getElementById("description").value;
+                    type = document.getElementById("newContactType").value;
+                    subject = document.getElementById("subject").value;
+                    email = document.getElementById("contact").value;
+                    priority = Number(document.getElementById("newContactPriority").value);
+                    status = Number(document.getElementById("newContactStatus").value);
+                    cc_emails = document.getElementById("ccEmail").value.split(";");
+                    arr = [description, subject, email, priority, status, cc_emails];
+                    obj = {};
+                    if (description != "") {
+                        obj["description"] = description;
+                    }
+                    if (subject != "") {
+                        obj["subject"] = subject;
+                    }
+                    if (email != "") {
+                        obj["email"] = email;
+                    }
+                    if (priority != 0) {
+                        obj["priority"] = priority;
+                    }
+                    if (status != 0) {
+                        obj["status"] = status;
+                    }
+                    if (cc_emails.length != 0 && cc_emails[0] != "") {
+                        obj["cc_emails"] = cc_emails;
+                    }
+                    if (type != "") {
+                        obj["type"] = type;
+                    }
+                    console.log(obj);
+                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + id;
                     h = new Headers();
                     h.append("Content-Type", "application/json");
                     encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -131,7 +167,7 @@ function updateTicket() {
                     req = new Request(uri, {
                         method: "PUT",
                         headers: h,
-                        body: data,
+                        body: JSON.stringify(obj),
                         credentials: "omit"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -141,7 +177,7 @@ function updateTicket() {
                 case 2:
                     jsonData = _a.sent();
                     console.log(jsonData);
-                    str = getNewTicketTemplate();
+                    viewTicket(id);
                     return [2 /*return*/];
             }
         });
@@ -149,11 +185,21 @@ function updateTicket() {
 }
 function deleteTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var uri, h, encoded, auth, req, response, jsonData;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var del, _a, _b, _i, i, uri, h, encoded, auth, req, response;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets/9";
+                    del = document.getElementsByName("deleteTicket");
+                    _a = [];
+                    for (_b in del)
+                        _a.push(_b);
+                    _i = 0;
+                    _c.label = 1;
+                case 1:
+                    if (!(_i < _a.length)) return [3 /*break*/, 5];
+                    i = _a[_i];
+                    if (!(del[i].checked == true)) return [3 /*break*/, 3];
+                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + del[i].value;
                     h = new Headers();
                     encoded = window.btoa("xDLGgeXdlwnseTrFTA");
                     auth = "Basic " + encoded;
@@ -164,14 +210,83 @@ function deleteTicket() {
                         credentials: "omit"
                     });
                     return [4 /*yield*/, fetch(req)];
+                case 2:
+                    response = _c.sent();
+                    // let jsonData = await response.json();
+                    console.log(response);
+                    _c.label = 3;
+                case 3:
+                    console.log(del[i].checked);
+                    _c.label = 4;
+                case 4:
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 5:
+                    listTicket();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function viewTicket(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var btn2, status, priority, uri, h, encoded, auth, req, response, jsonData, updatedDate, updatedTime, tempstr, i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    btn2 = document.getElementById("btn2");
+                    btn2.disabled = false;
+                    btn2.innerHTML = "Update Ticket";
+                    status = [".", ".", "Open", "Pending", "Resolved", "Closed"];
+                    priority = [".", "Low", "Medium", "High", "Urgent"];
+                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + String(id) + "?include=requester";
+                    h = new Headers();
+                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    auth = "Basic " + encoded;
+                    h.append("Authorization", auth);
+                    req = new Request(uri, {
+                        method: "GET",
+                        headers: h,
+                        credentials: "omit"
+                    });
+                    return [4 /*yield*/, fetch(req)];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
                 case 2:
                     jsonData = _a.sent();
-                    console.log(response);
+                    console.log(jsonData);
+                    updatedDate = new Date(jsonData.updated_at);
+                    updatedTime = updatedDate.getUTCDate();
+                    tempstr = "";
+                    for (i in jsonData.cc_emails) {
+                        if (i == String(jsonData.cc_emails.length - 1)) {
+                            tempstr += "" + jsonData.cc_emails[i];
+                        }
+                        else {
+                            tempstr += jsonData.cc_emails[i] + ",";
+                        }
+                    }
+                    document.getElementById("content").innerHTML = "<div class=\"row\" >\n             <div class=\"col-lg-8\" >\n             <div class=\"card\">\n                <div class=\"card-header\">\n                   " + jsonData.subject + "\n                   <footer class=\"blockquote-footer\"> <cite title=\"Source Title\">" + jsonData.requester.name + "</cite>  reported via the portal </footer>\n                    </blockquote>\n                   <footer class=\"blockquote-footer\">Last updated at <cite title=\"Source Title\">" + updatedDate + "</cite></footer>\n                    </blockquote>\n                </div>\n                <div class=\"card-body\">\n                    <blockquote class=\"blockquote mb-0\">\n                    <p>Description: " + jsonData.description_text + "</p>\n                    <p>Requester ID: " + jsonData.requester_id + "</p>\n                    <p>Status: " + status[jsonData.status] + " &emsp;&emsp;&emsp;&emsp;&emsp; Priority: " + priority[jsonData.priority] + "</p>\n                    <p>CC-Emails: " + tempstr + "</p>\n                   \n                    \n                </div>\n                </div>\n             </div>\n             <div class=\"col-lg-4\" id=\"viewTicketCard\">\n             </div>\n             </div>";
+                    btn2.setAttribute("onclick", "getUpdateTemplate(" + jsonData.id + ")");
                     return [2 /*return*/];
             }
         });
     });
+}
+function enableDelete() {
+    document.getElementById("btn2").disabled = false;
+    document.getElementById("btn2").setAttribute("class", "btn-danger");
+    var del = document.getElementsByName("deleteTicket");
+    var flag = true;
+    for (var i in del) {
+        if (del[i].checked == true) {
+            flag = false;
+        }
+    }
+    if (flag == true) {
+        document.getElementById("btn2").disabled = true;
+        document.getElementById("btn2").classList.remove("btn-danger");
+        document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
+    }
 }

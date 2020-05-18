@@ -1,4 +1,9 @@
-a {
+.astyle {
     text-decoration: none;
     color: white;
+}
+
+#ticketTitle:hover {
+    color: #bd0e02;
+    font-weight: bold;
 }
