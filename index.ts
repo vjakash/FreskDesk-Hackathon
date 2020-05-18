@@ -1,6 +1,6 @@
 window.onload=()=>{
-    // templateBody();
-    getAPiKey();
+    templateBody();
+    // getAPiKey();
 }
 let apiKey;
 async function dashBoard(ind){
