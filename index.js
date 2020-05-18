@@ -57,12 +57,13 @@ function dashBoard(ind) {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:
                     response = _a.sent();
+                    console.log(response);
                     return [4 /*yield*/, response.json()];
                 case 2:
                     jsonData = _a.sent();
@@ -115,7 +116,7 @@ function listTicket() {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -160,7 +161,7 @@ function createTicket() {
                         method: "POST",
                         headers: h,
                         body: data,
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -223,7 +224,7 @@ function updateTicket(id) {
                         method: "PUT",
                         headers: h,
                         body: JSON.stringify(obj),
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -265,7 +266,7 @@ function deleteTicket() {
                     req = new Request(uri, {
                         method: "DELETE",
                         headers: h,
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -310,7 +311,7 @@ function viewTicket(id) {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit",
+                        //    credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];

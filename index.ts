@@ -19,11 +19,14 @@ async function dashBoard(ind){
   let req = new Request(uri, {
     method: "GET",
     headers: h,
-    credentials: "omit",
+
+//    credentials: "omit",
+
     mode:"cors"
   });
 
     let response = await fetch(req);
+    console.log(response);
     let jsonData = await response.json();
     console.log(jsonData);
     if(jsonData.hasOwnProperty('code')){
@@ -96,7 +99,9 @@ async function listTicket() {
   let req = new Request(uri, {
     method: "GET",
     headers: h,
-    credentials: "omit",
+
+//    credentials: "omit",
+
     mode:"cors"
   });
   let response = await fetch(req);
@@ -153,7 +158,9 @@ async function createTicket() {
     method: "POST",
     headers: h,
     body:data,
-    credentials: "omit",
+
+//    credentials: "omit",
+
     mode:"cors"
   });
   let response = await fetch(req);
@@ -210,7 +217,9 @@ async function updateTicket(id){
     method: "PUT",
     headers: h,
     body:JSON.stringify(obj),
-    credentials: "omit",
+
+//    credentials: "omit",
+
     mode:"cors"
   });
   let response = await fetch(req);
@@ -235,7 +244,9 @@ async function deleteTicket(){
             let req = new Request(uri, {
             method: "DELETE",
             headers: h,
-            credentials: "omit",
+        
+//    credentials: "omit",
+
     mode:"cors"
             });
             let response = await fetch(req);
@@ -268,7 +279,9 @@ async function viewTicket(id){
             let req = new Request(uri, {
             method: "GET",
             headers: h,
-            credentials: "omit",
+        
+//    credentials: "omit",
+
     mode:"cors"
             });
             let response = await fetch(req);
