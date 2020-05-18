@@ -51,7 +51,7 @@ function dashBoard(ind) {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
@@ -113,7 +113,7 @@ function listTicket() {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "GET",
@@ -155,7 +155,7 @@ function createTicket() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
@@ -222,7 +222,7 @@ function updateTicket(id) {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "PUT",
@@ -264,7 +264,7 @@ function deleteTicket() {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "DELETE",
@@ -308,7 +308,7 @@ function viewTicket(id) {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
-                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/?");
                     h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "GET",
