@@ -57,7 +57,8 @@ function dashBoard(ind) {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:
@@ -114,7 +115,8 @@ function listTicket() {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:
@@ -158,7 +160,8 @@ function createTicket() {
                         method: "POST",
                         headers: h,
                         body: data,
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:
@@ -220,7 +223,8 @@ function updateTicket(id) {
                         method: "PUT",
                         headers: h,
                         body: JSON.stringify(obj),
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:
@@ -261,7 +265,8 @@ function deleteTicket() {
                     req = new Request(uri, {
                         method: "DELETE",
                         headers: h,
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 2:
@@ -305,7 +310,8 @@ function viewTicket(id) {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        credentials: "omit"
+                        credentials: "omit",
+                        mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
                 case 1:

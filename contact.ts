@@ -26,6 +26,7 @@ async function listContact() {
     method: "GET",
     headers: h,
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
   let jsonData = await response.json();
@@ -84,6 +85,7 @@ async function viewContact(id){
             method: "GET",
             headers: h,
             credentials: "omit",
+    mode:"cors"
             });
             let response = await fetch(req);
              let jsonData = await response.json();
@@ -160,6 +162,7 @@ async function updateContact(id){
     headers: h,
     body:JSON.stringify(obj),
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
 //   let jsonData = await response.json();
@@ -193,6 +196,7 @@ async function createContact() {
     headers: h,
     body:data,
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
   let jsonData = await response.json();
@@ -218,6 +222,7 @@ async function deleteContact(){
             method: "DELETE",
             headers: h,
             credentials: "omit",
+    mode:"cors"
             });
             let response = await fetch(req);
             // let jsonData = await response.json();

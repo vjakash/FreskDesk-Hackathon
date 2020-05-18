@@ -20,6 +20,7 @@ async function dashBoard(ind){
     method: "GET",
     headers: h,
     credentials: "omit",
+    mode:"cors"
   });
 
     let response = await fetch(req);
@@ -96,6 +97,7 @@ async function listTicket() {
     method: "GET",
     headers: h,
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
   let jsonData = await response.json();
@@ -152,6 +154,7 @@ async function createTicket() {
     headers: h,
     body:data,
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
   let jsonData = await response.json();
@@ -208,6 +211,7 @@ async function updateTicket(id){
     headers: h,
     body:JSON.stringify(obj),
     credentials: "omit",
+    mode:"cors"
   });
   let response = await fetch(req);
   let jsonData = await response.json();
@@ -232,6 +236,7 @@ async function deleteTicket(){
             method: "DELETE",
             headers: h,
             credentials: "omit",
+    mode:"cors"
             });
             let response = await fetch(req);
             // let jsonData = await response.json();
@@ -264,6 +269,7 @@ async function viewTicket(id){
             method: "GET",
             headers: h,
             credentials: "omit",
+    mode:"cors"
             });
             let response = await fetch(req);
              let jsonData = await response.json();
