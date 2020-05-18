@@ -6,7 +6,7 @@ function templateBody() {
     </button>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+            <a class="nav-link" href="#" onclick=" getAPiKey();">Sign out</a>
         </li>
     </ul>
 </nav>
@@ -18,7 +18,7 @@ function templateBody() {
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link active astyle" href="#">
-                             Dashboard 
+                            <span onclick="dashBoard(0)"> Dashboard </span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -44,9 +44,6 @@ function templateBody() {
                         <button type="button" class="btn btn-sm btn-outline-secondary" id="btn1">Share</button>
                         <button type="button" class="btn btn-sm btn-outline-secondary" id="btn2">Export</button>
                     </div>
-                    <select class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                        <option value="fae">This week</option> 
-                    </select>
                 </div>
             </div>
             <div class="container-fluid" id="content">
@@ -56,6 +53,7 @@ function templateBody() {
 </div>`;
   document.body.innerHTML += str;
 }
+
 let on = 1;
 function getNewTicketTemplate() {
   if (on == 1) {
@@ -428,7 +426,23 @@ function getContactUpdateTemplate(id){
     }
     
 }
-/************************************************* */
+/**************************************************/
 function getAPiKey(){
-
+document.body.innerHTML=`<div class="container-fluid text-center bg-dark text-white">
+<h1>FRESH DESK</h1>
+</div>
+<div class="container-fluid">
+<div class="row mt-9">
+    <div class="col-lg-3 "></div>
+    <div class="col-lg-6 text-center" style="margin-top: 10vh;">
+        <img src="favicon1.png" alt="" width="150" height="150">
+        <h1>Please Enter API key</h1><br>
+        <form onsubmit="dashBoard(1)">
+        <input type=" text " class="form-control " id="apikey" placeholder="API KEY " aria-label="Username " aria-describedby="addon-wrapping " required><br>
+        <button type="button "class="btn btn-primary ">Log In</button>
+        </form>
+    </div>
+    <div class="col-lg-3 "></div>
+</div>
+</div>`;
 }

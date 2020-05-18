@@ -45,6 +45,7 @@ function listContact() {
                     title.innerHTML = "Contacts";
                     btn1 = document.getElementById("btn1");
                     btn1.innerHTML = "+New Contact";
+                    btn1.disabled = false;
                     btn1.setAttribute("onclick", "getNewContactTemplate()");
                     btn2 = document.getElementById("btn2");
                     btn2.innerHTML = "Delete";
@@ -55,7 +56,7 @@ function listContact() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -82,16 +83,18 @@ function listContact() {
 }
 function viewContact(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var btn2, uri, h, encoded, auth, req, response, jsonData, temp;
+        var btn1, btn2, uri, h, encoded, auth, req, response, jsonData, temp;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    btn1 = document.getElementById("btn1");
+                    btn1.disabled = true;
                     btn2 = document.getElementById("btn2");
                     btn2.disabled = false;
                     btn2.innerHTML = "Update Ticket";
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + String(id);
                     h = new Headers();
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -147,7 +150,7 @@ function updateContact(id) {
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + id;
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -182,7 +185,7 @@ function createContact() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -222,7 +225,7 @@ function deleteContact() {
                     if (!(del[i].checked == true)) return [3 /*break*/, 3];
                     uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + del[i].value;
                     h = new Headers();
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {

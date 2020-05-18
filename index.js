@@ -35,8 +35,57 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 window.onload = function () {
-    templateBody();
+    // templateBody();
+    getAPiKey();
 };
+var apiKey;
+function dashBoard(ind) {
+    return __awaiter(this, void 0, void 0, function () {
+        var uri, h, encoded, auth, req, response, jsonData, unresolved, i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (ind == 1) {
+                        apiKey = document.getElementById("apikey").value;
+                    }
+                    uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
+                    h = new Headers();
+                    h.append("Content-Type", "application/json");
+                    encoded = window.btoa(apiKey);
+                    auth = "Basic " + encoded;
+                    h.append("Authorization", auth);
+                    req = new Request(uri, {
+                        method: "GET",
+                        headers: h,
+                        credentials: "omit"
+                    });
+                    return [4 /*yield*/, fetch(req)];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    jsonData = _a.sent();
+                    console.log(jsonData);
+                    if (jsonData.hasOwnProperty('code')) {
+                        getAPiKey();
+                        alert(jsonData.code + "/n" + jsonData.message);
+                    }
+                    else {
+                        document.body.innerHTML = "";
+                        templateBody();
+                        unresolved = 0;
+                        for (i in jsonData) {
+                            if (jsonData[i].status == 2 || jsonData[i].status == 3) {
+                                unresolved++;
+                            }
+                        }
+                        document.getElementById("content").innerHTML = "\n        <div class=\"row\">\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title\">Total Tickets</h1>\n                    <h1>" + jsonData.length + "</h1>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-lg-6\">\n                    <div class=\"card\" style=\"width: 100%;\">\n                    <div class=\"card-body\">\n                    <h1 class=\"card-title\">Unresolved Tickets</h1>\n                    <h1>" + unresolved + "</h1>\n                    </div>\n                </div>\n            </div>\n        </div>";
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function listTicket() {
     return __awaiter(this, void 0, void 0, function () {
         var title, btn1, btn2, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
@@ -48,6 +97,7 @@ function listTicket() {
                     title.innerHTML = "Tickets";
                     btn1 = document.getElementById("btn1");
                     btn1.innerHTML = "+New Ticket";
+                    btn1.disabled = false;
                     btn1.setAttribute("onclick", "getNewTicketTemplate()");
                     btn2 = document.getElementById("btn2");
                     btn2.innerHTML = "Delete";
@@ -58,7 +108,7 @@ function listTicket() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -101,7 +151,7 @@ function createTicket() {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -163,7 +213,7 @@ function updateTicket(id) {
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + id;
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -203,7 +253,7 @@ function deleteTicket() {
                     if (!(del[i].checked == true)) return [3 /*break*/, 3];
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + del[i].value;
                     h = new Headers();
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -232,10 +282,12 @@ function deleteTicket() {
 }
 function viewTicket(id) {
     return __awaiter(this, void 0, void 0, function () {
-        var btn2, status, priority, uri, h, encoded, auth, req, response, jsonData, updatedDate, updatedTime, tempstr, i;
+        var btn1, btn2, status, priority, uri, h, encoded, auth, req, response, jsonData, updatedDate, updatedTime, tempstr, i;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    btn1 = document.getElementById("btn1");
+                    btn1.disabled = true;
                     btn2 = document.getElementById("btn2");
                     btn2.disabled = false;
                     btn2.innerHTML = "Update Ticket";
@@ -243,7 +295,7 @@ function viewTicket(id) {
                     priority = [".", "Low", "Medium", "High", "Urgent"];
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets/" + String(id) + "?include=requester";
                     h = new Headers();
-                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+                    encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {

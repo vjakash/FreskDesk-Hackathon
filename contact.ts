@@ -2,8 +2,9 @@ async function listContact() {
     document.getElementById("content").innerHTML="";
     let title=document.getElementById("titleOfMain");
     title.innerHTML="Contacts";
-    let btn1=document.getElementById("btn1");
+    let btn1=<HTMLButtonElement>document.getElementById("btn1");
     btn1.innerHTML="+New Contact";
+    btn1.disabled=false;
     btn1.setAttribute("onclick","getNewContactTemplate()");
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
     btn2.innerHTML="Delete";
@@ -15,7 +16,8 @@ async function listContact() {
   let uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
   let h = new Headers();
   h.append("Content-Type", "application/json");
-  let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+//   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+  let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
   let req = new Request(uri, {
@@ -62,13 +64,16 @@ for(let i in jsonData){
 }
 
 async function viewContact(id){
+    let btn1=<HTMLButtonElement>document.getElementById("btn1");
+    btn1.disabled=true;
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
     btn2.disabled=false;
     btn2.innerHTML="Update Ticket";
 
     let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+String(id);
             let h = new Headers();
-            let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
             let req = new Request(uri, {
@@ -140,7 +145,8 @@ async function updateContact(id){
   let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+id;
   let h = new Headers();
   h.append("Content-Type", "application/json");
-  let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+//   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+  let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
   let req = new Request(uri, {
@@ -170,7 +176,8 @@ async function createContact() {
   let uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
   let h = new Headers();
   h.append("Content-Type", "application/json");
-  let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+//   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+  let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
   let req = new Request(uri, {
@@ -193,7 +200,8 @@ async function deleteContact(){
             
             let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+del[i].value;
             let h = new Headers();
-            let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
+            let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
             let req = new Request(uri, {
