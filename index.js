@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 window.onload = function () {
-    templateBody();
-    // getAPiKey();
+    // templateBody();
+    getAPiKey();
 };
 var apiKey;
 function dashBoard(ind) {

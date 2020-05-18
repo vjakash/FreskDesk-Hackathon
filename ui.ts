@@ -437,7 +437,7 @@ document.body.innerHTML=`<div class="container-fluid text-center bg-dark text-wh
     <div class="col-lg-6 text-center" style="margin-top: 10vh;">
         <img src="favicon1.png" alt="" width="150" height="150">
         <h1>Please Enter API key</h1><br>
-        <form onsubmit="dashBoard(1)">
+        <form onsubmit="dashBoard(1);return false;">
         <input type=" text " class="form-control " id="apikey" placeholder="API KEY " aria-label="Username " aria-describedby="addon-wrapping " required><br>
         <button type="button "class="btn btn-primary ">Log In</button>
         </form>
