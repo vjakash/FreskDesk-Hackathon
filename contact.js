@@ -64,7 +64,7 @@ function listContact() {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        //    credentials: "omit",
+                        credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -105,7 +105,7 @@ function viewContact(id) {
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
-                        //    credentials: "omit",
+                        credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -165,7 +165,7 @@ function updateContact(id) {
                         method: "PUT",
                         headers: h,
                         body: JSON.stringify(obj),
-                        //    credentials: "omit",
+                        credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -203,7 +203,7 @@ function createContact() {
                         method: "POST",
                         headers: h,
                         body: data,
-                        //    credentials: "omit",
+                        credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
@@ -245,7 +245,7 @@ function deleteContact() {
                     req = new Request(uri, {
                         method: "DELETE",
                         headers: h,
-                        //    credentials: "omit",
+                        credentials: "omit",
                         mode: "cors"
                     });
                     return [4 /*yield*/, fetch(req)];
