@@ -10,6 +10,8 @@ async function dashBoard(ind){
     let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
   let h = new Headers();
   h.append("Content-Type", "application/json");
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
@@ -88,6 +90,8 @@ async function listTicket() {
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
   let req = new Request(uri, {
     method: "GET",
     headers: h,
@@ -137,6 +141,8 @@ async function createTicket() {
   let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
   let h = new Headers();
   h.append("Content-Type", "application/json");
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
@@ -195,6 +201,8 @@ async function updateTicket(id){
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
   let req = new Request(uri, {
     method: "PUT",
     headers: h,
@@ -218,6 +226,8 @@ async function deleteTicket(){
             let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
+            h.append("Origin","https://vjakash.github.io/Hackathon/");
+            h.append("Host","vjakash.github.io/Hackathon/")
             let req = new Request(uri, {
             method: "DELETE",
             headers: h,
@@ -248,6 +258,8 @@ async function viewTicket(id){
             let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
+            h.append("Origin","https://vjakash.github.io/Hackathon/");
+            h.append("Host","vjakash.github.io/Hackathon/")
             let req = new Request(uri, {
             method: "GET",
             headers: h,

@@ -20,6 +20,8 @@ async function listContact() {
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
   let req = new Request(uri, {
     method: "GET",
     headers: h,
@@ -76,6 +78,8 @@ async function viewContact(id){
             let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
+            h.append("Origin","https://vjakash.github.io/Hackathon/");
+            h.append("Host","vjakash.github.io/Hackathon/")
             let req = new Request(uri, {
             method: "GET",
             headers: h,
@@ -149,6 +153,8 @@ async function updateContact(id){
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
   let req = new Request(uri, {
     method: "PUT",
     headers: h,
@@ -180,6 +186,8 @@ async function createContact() {
   let encoded = window.btoa(apiKey);
   let auth = `Basic ${encoded}`;
   h.append("Authorization", auth);
+  h.append("Origin","https://vjakash.github.io/Hackathon/");
+  h.append("Host","vjakash.github.io/Hackathon/")
   let req = new Request(uri, {
     method: "POST",
     headers: h,
@@ -204,6 +212,8 @@ async function deleteContact(){
             let encoded = window.btoa(apiKey);
             let auth = `Basic ${encoded}`;
             h.append("Authorization", auth);
+            h.append("Origin","https://vjakash.github.io/Hackathon/");
+            h.append("Host","vjakash.github.io/Hackathon/")
             let req = new Request(uri, {
             method: "DELETE",
             headers: h,

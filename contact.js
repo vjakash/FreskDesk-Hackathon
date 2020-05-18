@@ -59,6 +59,8 @@ function listContact() {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
@@ -97,6 +99,8 @@ function viewContact(id) {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "GET",
                         headers: h,
@@ -153,6 +157,8 @@ function updateContact(id) {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "PUT",
                         headers: h,
@@ -188,6 +194,8 @@ function createContact() {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "POST",
                         headers: h,
@@ -228,6 +236,8 @@ function deleteContact() {
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
+                    h.append("Origin", "https://vjakash.github.io/Hackathon/");
+                    h.append("Host", "vjakash.github.io/Hackathon/");
                     req = new Request(uri, {
                         method: "DELETE",
                         headers: h,
