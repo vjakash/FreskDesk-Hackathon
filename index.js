@@ -34,16 +34,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+window.onload = function () {
+    templateBody();
+};
 function listTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var uri, h, encoded, auth, req, response, jsonData;
+        var title, btn1, uri, h, encoded, auth, req, response, jsonData, i, createdate, createtime;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    document.getElementById("content").innerHTML = "";
+                    title = document.getElementById("titleOfMain");
+                    title.innerHTML = "Tickets";
+                    btn1 = document.getElementById("btn1");
+                    btn1.innerHTML = "+New Ticket";
+                    btn1.setAttribute("onclick", "getNewTicketTemplate()");
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
-                    encoded = window.btoa("vjbakash:Idontno@2");
+                    encoded = window.btoa("xDLGgeXdlwnseTrFTA");
                     auth = "Basic " + encoded;
                     h.append("Authorization", auth);
                     req = new Request(uri, {
@@ -57,7 +66,12 @@ function listTicket() {
                     return [4 /*yield*/, response.json()];
                 case 2:
                     jsonData = _a.sent();
-                    console.log(jsonData);
+                    console.log(jsonData[0].created_at);
+                    for (i in jsonData) {
+                        createdate = new Date(jsonData[i].created_at);
+                        createtime = createdate.getUTCDate();
+                        document.getElementById("content").innerHTML += "<div class=\"card mb-3\" style=\"max-width: 800px;\">\n    <div class=\"row no-gutters\">\n        <div class=\"col-md-1\">\n            <input type=\"checkbox\" onclick=\"\" class=\"mx-auto\" value=\"\"></input>\n        </div>\n        <div class=\"col-md-8\">\n            <div class=\"card-body\">\n                <h5 class=\"card-title\">" + jsonData[i].subject + "#" + jsonData[i].id + "</h5>\n                <!-- <p class=\"card-text\">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> -->\n                <p class=\"card-text\"><small class=\"text-muted\">Created at " + createdate + "</small></p>\n            </div>\n        </div>\n        <div class=\"col-md-3\">\n  \n        </div>\n    </div>\n  </div>";
+                    }
                     return [2 /*return*/];
             }
         });
@@ -65,11 +79,17 @@ function listTicket() {
 }
 function createTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var data, uri, h, encoded, auth, req, response, jsonData;
+        var description, subject, email, priority, status, cc_emails, data, uri, h, encoded, auth, req, response, jsonData;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    data = '{ "description": "Details about the issue...", "subject": "Support Needed...", "email": "tom@outerspace.com", "priority": 1, "status": 2, "cc_emails": ["ram@freshdesk.com","diana@freshdesk.com"] }';
+                    description = document.getElementById("description").value;
+                    subject = document.getElementById("subject").value;
+                    email = document.getElementById("contact").value;
+                    priority = Number(document.getElementById("newContactPriority").value);
+                    status = Number(document.getElementById("newContactStatus").value);
+                    cc_emails = document.getElementById("ccEmail").value.split(";");
+                    data = JSON.stringify({ description: description, subject: subject, email: email, priority: priority, status: status, cc_emails: cc_emails });
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
@@ -89,6 +109,7 @@ function createTicket() {
                 case 2:
                     jsonData = _a.sent();
                     console.log(jsonData);
+                    listTicket();
                     return [2 /*return*/];
             }
         });
@@ -96,7 +117,7 @@ function createTicket() {
 }
 function updateTicket() {
     return __awaiter(this, void 0, void 0, function () {
-        var data, uri, h, encoded, auth, req, response, jsonData;
+        var data, uri, h, encoded, auth, req, response, jsonData, str;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -120,6 +141,7 @@ function updateTicket() {
                 case 2:
                     jsonData = _a.sent();
                     console.log(jsonData);
+                    str = getNewTicketTemplate();
                     return [2 /*return*/];
             }
         });
@@ -153,4 +175,3 @@ function deleteTicket() {
         });
     });
 }
-listTicket();
