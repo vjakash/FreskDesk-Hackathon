@@ -252,6 +252,8 @@ async function deleteTicket(){
     
 }
 async function viewTicket(id){
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
     let btn1=<HTMLButtonElement>document.getElementById("btn1");
     btn1.disabled=true;
     let btn2=<HTMLButtonElement>document.getElementById("btn2");

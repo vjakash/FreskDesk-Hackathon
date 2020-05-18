@@ -90,6 +90,8 @@ function viewContact(id) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    document.getElementById("btn2").classList.remove("btn-danger");
+                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
                     btn1 = document.getElementById("btn1");
                     btn1.disabled = true;
                     btn2 = document.getElementById("btn2");

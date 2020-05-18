@@ -41,8 +41,8 @@ function templateBody() {
                 <h1 class="h2" id="titleOfMain">Dashboard</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn1">Share</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn2">Export</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn1">-</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="btn2">-</button>
                     </div>
                 </div>
             </div>
