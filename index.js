@@ -45,6 +45,7 @@ function dashBoard(ind) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("hi");
                     if (ind == 1) {
                         apiKey = document.getElementById("apikey").value;
                     }

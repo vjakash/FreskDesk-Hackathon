@@ -4,6 +4,7 @@ window.onload=()=>{
 }
 let apiKey;
 async function dashBoard(ind){
+    console.log("hi");
     if(ind==1){
         apiKey=(<HTMLInputElement>document.getElementById("apikey")).value;
     }
