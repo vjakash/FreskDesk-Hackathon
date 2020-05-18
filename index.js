@@ -52,6 +52,8 @@ function listTicket() {
                     btn2 = document.getElementById("btn2");
                     btn2.innerHTML = "Delete";
                     btn2.disabled = true;
+                    document.getElementById("btn2").classList.remove("btn-danger");
+                    document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-outline-secondary");
                     btn2.setAttribute("onclick", "deleteTicket()");
                     uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
                     h = new Headers();
@@ -264,7 +266,7 @@ function viewTicket(id) {
                             tempstr += "" + jsonData.cc_emails[i];
                         }
                         else {
-                            tempstr += jsonData.cc_emails[i] + ",";
+                            tempstr += jsonData.cc_emails[i] + ", ";
                         }
                     }
                     document.getElementById("content").innerHTML = "<div class=\"row\" >\n             <div class=\"col-lg-8\" >\n             <div class=\"card\">\n                <div class=\"card-header\">\n                   " + jsonData.subject + "\n                   <footer class=\"blockquote-footer\"> <cite title=\"Source Title\">" + jsonData.requester.name + "</cite>  reported via the portal </footer>\n                    </blockquote>\n                   <footer class=\"blockquote-footer\">Last updated at <cite title=\"Source Title\">" + updatedDate + "</cite></footer>\n                    </blockquote>\n                </div>\n                <div class=\"card-body\">\n                    <blockquote class=\"blockquote mb-0\">\n                    <p>Description: " + jsonData.description_text + "</p>\n                    <p>Requester ID: " + jsonData.requester_id + "</p>\n                    <p>Status: " + status[jsonData.status] + " &emsp;&emsp;&emsp;&emsp;&emsp; Priority: " + priority[jsonData.priority] + "</p>\n                    <p>CC-Emails: " + tempstr + "</p>\n                   \n                    \n                </div>\n                </div>\n             </div>\n             <div class=\"col-lg-4\" id=\"viewTicketCard\">\n             </div>\n             </div>";

@@ -1,6 +1,6 @@
 function templateBody() {
   let str = ` <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Fresh Desk </a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -28,7 +28,7 @@ function templateBody() {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link astyle" href="#">
-                            <span class="material-icons" data-toggle="tooltip" data-placement="right" title="Tickets">perm_contact_calendar</span>
+                            <span class="material-icons" onclick="listContact()" data-toggle="tooltip" data-placement="right" title="Contacts">perm_contact_calendar</span>
                         </a>
                     </li>
 
@@ -262,6 +262,173 @@ function getUpdateTemplate(id){
     }
     
 }
-function getAPiKey(){
+/***************************************Contacts */
+function getNewContactTemplate() {
+    if (on == 1) {
+      let str = `<div class="col-md-10 order-md-1">
+      <h4 class="mb-3">New Contact</h4>
+      <form class="needs-validation" onSubmit="createContact();return false;">
+          <div class="mb-3">
+              <label for="name">Name<span style="color: red;">*</span></label>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                      Contact is required.
+                  </div>
+              </div>
+          </div>
+
+          <div class="mb-3">
+              <label for="email">Email<span style="color: red;">*</span></label>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" id="email" placeholder="abc@freshdesk.com" required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                      Contact is required.
+                  </div>
+              </div>
+          </div>
+  
+          <div class="mb-3">
+              <label for="title">Title</label>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" id="title" placeholder="" >
+                  <div class="invalid-feedback" style="width: 100%;">
+                      Subject is required.
+                  </div>
+              </div>
+          </div>
+
+       
+          <div class="mb-3">
+              <label for="workPhone">Work Phone<span style="color: red;">*</span></label>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" id="workPhone" placeholder="" required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                      Subject is required.
+                  </div>
+              </div>
+          </div>
+          <div class="mb-3">
+              <label for="twitter"> Twitter Id</label>
+              <div class="input-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text">@</span>
+                  </div>
+                  <input type="text" class="form-control" id="twitter" placeholder="" >
+                  <div class="invalid-feedback" style="width: 100%;">
+                      Subject is required.
+                  </div>
+              </div>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit" >Create New Contact</button>
+      </form>
+  </div>
+  </div>`;
+      document.getElementById("newContact").innerHTML = str;
+      on=0;
+    }
+    else{
+      document.getElementById("newContact").innerHTML = "";
+      on=1;
+    }
+  }
+//   <div class="mb-3">
+//   <label for="company">Company Id</label>
+//   <div class="input-group">
+//       <div class="input-group-prepend">
+//           <span class="input-group-text">@</span>
+//       </div>
+//       <input type="number" class="form-control" id="company" placeholder="" >
+//       <div class="invalid-feedback" style="width: 100%;">
+//           Subject is required.
+//       </div>
+//   </div>
+// </div>
+let conUpdateOn=1;
+function getContactUpdateTemplate(id){
+    if(conUpdateOn==1){
+        document.getElementById("viewContactCard").innerHTML+=`
+        <div class="col-md-10 order-md-1">
+        <h4 class="mb-3">New Ticket</h4>
+        <form class="needs-validation" onSubmit="updateContact(${id});return false;">
+            <div class="mb-3">
+                <label for="name">name</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="name" placeholder="Enter the name" >
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Contact is required.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="email" class="form-control" id="email" placeholder="abc@freshdesk.com">
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Contact is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="job_title">Job Ttile</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="job_title" placeholder="" >
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Subject is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone">Work-Phone</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="number" class="form-control" id="phone" placeholder="" >
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Subject is required.
+                    </div>
+                </div>
+            </div>
+
+            
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Update this Contact</button>
+        </form>
+    </div>`;
+    conUpdateOn=0;
+    }
+    else{
+        document.getElementById("viewContactCard").innerHTML="";
+        conUpdateOn=1;
+    }
     
+}
+/************************************************* */
+function getAPiKey(){
+
 }

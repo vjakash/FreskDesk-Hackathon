@@ -11,6 +11,8 @@ async function listTicket() {
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
     btn2.innerHTML="Delete";
     btn2.disabled=true;
+    (<HTMLButtonElement>document.getElementById("btn2")).classList.remove("btn-danger");
+    (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-outline-secondary") ;
     btn2.setAttribute("onclick","deleteTicket()");
     //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/tickets'
   let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
