@@ -152,8 +152,8 @@ async function getPage(){
         <div class="col-lg-4 text-center">
                 <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()">Prev</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()">Next</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()"><h3>Prev</h3></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()"><h3>Next</h3></button>
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@ async function getPage(){
       document.getElementById("ticketCards").innerHTML+=`<div class="card mb-3 border border-dark" style="max-width: 100%; ">
       <div class="row no-gutters">
          <!-- <div class="col-md-1">
-              <input type="checkbox" onclick="enableDelete()"  value="${jsonData[i].id}" name="deleteTicket" style="margin-top:65%;margin-left:50%;"></input>
+              <input type="checkbox" onclick="enableDelete()" class="border border-dark"  value="${jsonData[i].id}" name="deleteTicket" style="margin-top:65%;margin-left:50%;"></input>
           </div>
           <div class="col-md-11 ">-->
               <div class="card-body">
