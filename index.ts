@@ -154,8 +154,8 @@ async function getPage(){
         <div class="col-lg-4 text-center">
                 <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()"><a href="#main"><h3>Prev</h3></a></button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()"><a href="#main"><h3>Next</h3></a></button>
+                <a href="#main"><button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()"><h3>Prev</h3></button></a>
+                <a href="#main">  <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()"><h3>Next</h3></button></a>
                 </div>
             </div>
         </div>
@@ -171,7 +171,15 @@ async function getPage(){
           </div>
           <div class="col-md-11 ">-->
               <div class="card-body">
-              <a href="#"  style="text-decoration:none;" ><input type="checkbox" onclick="enableDelete()"  value="${jsonData[i].id}" name="deleteTicket" ></input>
+              <a href="#"  style="text-decoration:none;" > 
+              <form action="#">
+              <p>
+              <label>
+                <input type="checkbox" onclick="enableDelete()" class="border border-dark"  value="${jsonData[i].id}" name="deleteTicket"/>
+                <span class="text-muted">Select to delete</span>
+              </label>
+            </p>
+            </form>
               <h1 class="card-title" onclick="viewTicket(${jsonData[i].id})" id="ticketTitle" style="width:100%;">
               ${jsonData[i].subject}#${jsonData[i].id}</h1>
               </a>

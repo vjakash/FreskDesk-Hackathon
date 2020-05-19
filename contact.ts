@@ -72,7 +72,14 @@ async function listContact() {
 for(let i in jsonData){
   document.getElementById("listOfContacts").innerHTML+=`
   <tr>
-  <th scope="row"><input type="checkbox" name="contactsDelete" value="${jsonData[i].id}" onclick="enableContactDelete()"/></th>
+  <th scope="row"><form action="#">
+  <p>
+  <label>
+    <input type="checkbox" name="contactsDelete" value="${jsonData[i].id}" onclick="enableContactDelete()"/>
+    <span class="text-muted">del</span>
+  </label>
+</p>
+</form></th>
   <td><a href="#" ><span onclick="viewContact(${jsonData[i].id})">${jsonData[i].name}</span></a></td>
   <td>${jsonData[i].job_title}</td>
   <td>${jsonData[i].company_id}</td>

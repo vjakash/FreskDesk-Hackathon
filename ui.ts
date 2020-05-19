@@ -15,7 +15,7 @@ function templateBody() {
 
 <div class="container-fluid">
     <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-1 d-md-block bg-dark text-white sidebar collapse" style="height: 175vh;">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-1 d-md-block bg-dark text-white sidebar collapse" style="height: 200vh;">
             <div class="sidebar-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -66,7 +66,7 @@ function getNewTicketTemplate() {
             <label for="contact">Contact<span style="color: red;">*</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
+                    
                 </div>
                 <input type="email" class="form-control" id="contact" placeholder="abc@freshdesk.com" required>
                 <div class="invalid-feedback" style="width: 100%;">
@@ -78,7 +78,7 @@ function getNewTicketTemplate() {
             <label for="eeEmail">CC Email</label>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
+                    
                 </div>
                 <input type="text" class="form-control" id="ccEmail" placeholder="abc@freshdesk.com;xyz@freshdesk.com">
                 <div class="invalid-feedback" style="width: 100%;">
@@ -91,7 +91,7 @@ function getNewTicketTemplate() {
             <label for="subject">Subject<span style="color: red;">*</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
+                    
                 </div>
                 <input type="text" class="form-control" id="subject" placeholder="" required>
                 <div class="invalid-feedback" style="width: 100%;">
@@ -169,7 +169,7 @@ function getUpdateTemplate(id){
                 <label for="contact">Contact</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="email" class="form-control" id="contact" placeholder="abc@freshdesk.com" >
                     <div class="invalid-feedback" style="width: 100%;">
@@ -181,7 +181,7 @@ function getUpdateTemplate(id){
                 <label for="eeEmail">CC Email</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="text" class="form-control" id="ccEmail" placeholder="abc@freshdesk.com;xyz@freshdesk.com">
                     <div class="invalid-feedback" style="width: 100%;">
@@ -194,7 +194,7 @@ function getUpdateTemplate(id){
                 <label for="subject">Subject</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="text" class="form-control" id="subject" placeholder="" >
                     <div class="invalid-feedback" style="width: 100%;">
@@ -272,7 +272,7 @@ function getNewContactTemplate() {
               <label for="name">Name<span style="color: red;">*</span></label>
               <div class="input-group">
                   <div class="input-group-prepend">
-                      <span class="input-group-text">@</span>
+                      
                   </div>
                   <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
                   <div class="invalid-feedback" style="width: 100%;">
@@ -285,7 +285,7 @@ function getNewContactTemplate() {
               <label for="email">Email<span style="color: red;">*</span></label>
               <div class="input-group">
                   <div class="input-group-prepend">
-                      <span class="input-group-text">@</span>
+                      
                   </div>
                   <input type="email" class="form-control" id="email" placeholder="abc@freshdesk.com" required>
                   <div class="invalid-feedback" style="width: 100%;">
@@ -298,7 +298,7 @@ function getNewContactTemplate() {
               <label for="title">Title</label>
               <div class="input-group">
                   <div class="input-group-prepend">
-                      <span class="input-group-text">@</span>
+                      
                   </div>
                   <input type="text" class="form-control" id="title" placeholder="" >
                   <div class="invalid-feedback" style="width: 100%;">
@@ -312,7 +312,7 @@ function getNewContactTemplate() {
               <label for="workPhone">Work Phone<span style="color: red;">*</span></label>
               <div class="input-group">
                   <div class="input-group-prepend">
-                      <span class="input-group-text">@</span>
+                      
                   </div>
                   <input type="text" class="form-control" id="workPhone" placeholder="" required>
                   <div class="invalid-feedback" style="width: 100%;">
@@ -324,7 +324,7 @@ function getNewContactTemplate() {
               <label for="twitter"> Twitter Id</label>
               <div class="input-group">
                   <div class="input-group-prepend">
-                      <span class="input-group-text">@</span>
+                      
                   </div>
                   <input type="text" class="form-control" id="twitter" placeholder="" >
                   <div class="invalid-feedback" style="width: 100%;">
@@ -368,7 +368,7 @@ function getContactUpdateTemplate(id){
                 <label for="name">name</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="text" class="form-control" id="name" placeholder="Enter the name" >
                     <div class="invalid-feedback" style="width: 100%;">
@@ -380,7 +380,7 @@ function getContactUpdateTemplate(id){
                 <label for="email">Email</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="email" class="form-control" id="email" placeholder="abc@freshdesk.com">
                     <div class="invalid-feedback" style="width: 100%;">
@@ -393,7 +393,7 @@ function getContactUpdateTemplate(id){
                 <label for="job_title">Job Ttile</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="text" class="form-control" id="job_title" placeholder="" >
                     <div class="invalid-feedback" style="width: 100%;">
@@ -406,7 +406,7 @@ function getContactUpdateTemplate(id){
                 <label for="phone">Work-Phone</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">@</span>
+                        
                     </div>
                     <input type="number" class="form-control" id="phone" placeholder="" >
                     <div class="invalid-feedback" style="width: 100%;">
