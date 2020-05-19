@@ -154,8 +154,13 @@ async function getPage(){
         <div class="col-lg-4 text-center">
                 <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
+<<<<<<< HEAD
                 <a href="#main"><button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()"><h3>Prev</h3></button></a>
                 <a href="#main">  <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()"><h3>Next</h3></button></a>
+=======
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="prev" onclick="prevCurrentPage()"><h3>Prev</h3></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" id="next" onclick="nextCurrentPage()"><h3>Next</h3></button>
+>>>>>>> parent of 30a0e9c... new page from start added
                 </div>
             </div>
         </div>
