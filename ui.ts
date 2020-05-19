@@ -163,7 +163,7 @@ function getUpdateTemplate(id){
     if(updateOn==1){
         document.getElementById("viewTicketCard").innerHTML+=`
         <div class="col-md-10 order-md-1">
-        <h4 class="mb-3">New Ticket</h4>
+        <h4 class="mb-3">Update Ticket</h4>
         <form class="needs-validation" onSubmit="updateTicket(${id});return false;">
             <div class="mb-3">
                 <label for="contact">Contact</label>
@@ -362,7 +362,7 @@ function getContactUpdateTemplate(id){
     if(conUpdateOn==1){
         document.getElementById("viewContactCard").innerHTML+=`
         <div class="col-md-10 order-md-1">
-        <h4 class="mb-3">New Ticket</h4>
+        <h4 class="mb-3">Update Contact</h4>
         <form class="needs-validation" onSubmit="updateContact(${id});return false;">
             <div class="mb-3">
                 <label for="name">name</label>
@@ -441,6 +441,7 @@ document.body.innerHTML=`<div class="container-fluid text-center bg-dark text-wh
         <h1>Please Enter API key</h1><br>
         <form onsubmit="dashBoard(1);return false;">
         <input type=" text " class="form-control " id="apikey" placeholder="API KEY " aria-label="Username " aria-describedby="addon-wrapping " required><br>
+        <input type=" text " class="form-control " id="domainName" placeholder="Enter Domain eg: 'DOMAIN'.freshwork.com " aria-label="Username " aria-describedby="addon-wrapping " required><br>
         <button type="button "class="btn btn-success ">Log In</button>
         </form>
     </div>

@@ -3,13 +3,15 @@ window.onload=()=>{
     getAPiKey();
 }
 let apiKey;
+let domainName;
 let totalTicket;
 async function dashBoard(ind){
     console.log("hi");
     if(ind==1){
         apiKey=(<HTMLInputElement>document.getElementById("apikey")).value;
+        domainName=(<HTMLInputElement>document.getElementById("domainName")).value;
     }
-    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
+    let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets";
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //  h.append("Origin","https://vjakash.github.io/Hackathon/?");
@@ -24,11 +26,18 @@ async function dashBoard(ind){
     credentials: "omit",
     mode:"cors"
   });
-
+    let jsonData 
     let response = await fetch(req);
     console.log(response);
-    let jsonData = await response.json();
-    console.log(jsonData);
+    if((response.status==404)){
+        getAPiKey();
+        alert(response.statusText+"\n Enter a valid Domain Name");
+        return;
+    }
+    else{
+        jsonData = await response.json();
+        console.log(jsonData);
+    }
     if(jsonData.hasOwnProperty('code')){
         getAPiKey();
         alert(jsonData.code+"/n"+ jsonData.message);
@@ -131,7 +140,7 @@ async function getPage(){
     document.getElementById("content").innerHTML="";
     let status=[".",".","Open","Pending","Resolved","Closed"];
     let priority=[".","Low","Medium","High","Urgent"];
-    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets?per_page=5&page="+currentPage;
+    let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets?per_page=5&page="+currentPage;
     let h = new Headers();
     h.append("Content-Type", "application/json");
   //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -213,7 +222,7 @@ async function createTicket() {
      -X POST 'https://domain.freshdesk.com/api/v2/tickets'*/
   let data =JSON.stringify({description,subject,email,priority,status,cc_emails,type});
 
-  let uri = "https://vjbakash.freshdesk.com/api/v2/tickets";
+  let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets";
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //  h.append("Origin","https://vjakash.github.io/Hackathon/?");
@@ -270,7 +279,7 @@ async function updateTicket(id){
     -X PUT -d '{ "priority":2, "status":3 }' 'https://domain.freshdesk.com/api/v2/tickets/1'*/ 
     ///api/v2/tickets/[id] 
     // let data = '{ "priority":2, "status":3 }';
-  let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+id;
+  let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets/"+id;
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -297,7 +306,7 @@ async function deleteTicket(){
     {
         if(del[i].checked==true){
             
-            let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+del[i].value;
+            let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets/"+del[i].value;
             let h = new Headers();
             // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
             let encoded = window.btoa(apiKey);
@@ -332,7 +341,7 @@ async function viewTicket(id){
     btn2.innerHTML="Update Ticket";
     let status=[".",".","Open","Pending","Resolved","Closed"];
     let priority=[".","Low","Medium","High","Urgent"];
-    let uri = "https://vjbakash.freshdesk.com/api/v2/tickets/"+String(id)+"?include=requester";
+    let uri = "https://"+domainName+".freshdesk.com/api/v2/tickets/"+String(id)+"?include=requester";
             let h = new Headers();
             // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
             let encoded = window.btoa(apiKey);

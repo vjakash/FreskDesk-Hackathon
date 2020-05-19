@@ -32,7 +32,7 @@ async function listContact() {
     (<HTMLButtonElement>document.getElementById("btn2")).setAttribute("class","btn btn-sm btn-dark") ;
     btn2.setAttribute("onclick","deleteContact()");
     //curl -v -u user@yourcompany.com:test -X GET 'https://domain.freshdesk.com/api/v2/contacts'
-  let uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
+  let uri = "https://"+domainName+".freshdesk.com/api/v2/contacts";
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -99,9 +99,9 @@ async function viewContact(id){
     btn1.disabled=true;
     let btn2=<HTMLButtonElement>document.getElementById("btn2");
     btn2.disabled=false;
-    btn2.innerHTML="Update Ticket";
+    btn2.innerHTML="Update Contact";
 
-    let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+String(id);
+    let uri = "https://"+domainName+".freshdesk.com/api/v2/contacts/"+String(id);
             let h = new Headers();
             // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
             let encoded = window.btoa(apiKey);
@@ -176,7 +176,7 @@ async function updateContact(id){
     -X PUT -d '{ "priority":2, "status":3 }' 'https://domain.freshdesk.com/api/v2/tickets/1'*/ 
     ///api/v2/tickets/[id] 
     // let data = '{ "priority":2, "status":3 }';
-  let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+id;
+  let uri = "https://"+domainName+".freshdesk.com/api/v2/contacts/"+id;
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -210,7 +210,7 @@ async function createContact() {
      -X POST 'https://domain.freshdesk.com/api/v2/tickets'*/
   let data =JSON.stringify({name,email,job_title,phone,twitter_id});
 
-  let uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
+  let uri = "https://"+domainName+".freshdesk.com/api/v2/contacts";
   let h = new Headers();
   h.append("Content-Type", "application/json");
 //   let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
@@ -238,7 +238,7 @@ async function deleteContact(){
     {
         if(del[i].checked==true){
             
-            let uri = "https://vjbakash.freshdesk.com/api/v2/contacts/"+del[i].value;
+            let uri = "https://"+domainName+".freshdesk.com/api/v2/contacts/"+del[i].value;
             let h = new Headers();
             // let encoded = window.btoa("xDLGgeXdlwnseTrFTA");
             let encoded = window.btoa(apiKey);

@@ -70,7 +70,7 @@ function listContact() {
                     document.getElementById("btn2").classList.remove("btn-danger");
                     document.getElementById("btn2").setAttribute("class", "btn btn-sm btn-dark");
                     btn2.setAttribute("onclick", "deleteContact()");
-                    uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
+                    uri = "https://" + domainName + ".freshdesk.com/api/v2/contacts";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
                     encoded = window.btoa(apiKey);
@@ -113,8 +113,8 @@ function viewContact(id) {
                     btn1.disabled = true;
                     btn2 = document.getElementById("btn2");
                     btn2.disabled = false;
-                    btn2.innerHTML = "Update Ticket";
-                    uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + String(id);
+                    btn2.innerHTML = "Update Contact";
+                    uri = "https://" + domainName + ".freshdesk.com/api/v2/contacts/" + String(id);
                     h = new Headers();
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
@@ -172,7 +172,7 @@ function updateContact(id) {
                         obj["phone"] = phone;
                     }
                     console.log(obj);
-                    uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + id;
+                    uri = "https://" + domainName + ".freshdesk.com/api/v2/contacts/" + id;
                     h = new Headers();
                     h.append("Content-Type", "application/json");
                     encoded = window.btoa(apiKey);
@@ -210,7 +210,7 @@ function createContact() {
                     phone = document.getElementById("workPhone").value;
                     twitter_id = document.getElementById("twitter").value;
                     data = JSON.stringify({ name: name, email: email, job_title: job_title, phone: phone, twitter_id: twitter_id });
-                    uri = "https://vjbakash.freshdesk.com/api/v2/contacts";
+                    uri = "https://" + domainName + ".freshdesk.com/api/v2/contacts";
                     h = new Headers();
                     h.append("Content-Type", "application/json");
                     encoded = window.btoa(apiKey);
@@ -254,7 +254,7 @@ function deleteContact() {
                     if (!(_i < _a.length)) return [3 /*break*/, 5];
                     i = _a[_i];
                     if (!(del[i].checked == true)) return [3 /*break*/, 3];
-                    uri = "https://vjbakash.freshdesk.com/api/v2/contacts/" + del[i].value;
+                    uri = "https://" + domainName + ".freshdesk.com/api/v2/contacts/" + del[i].value;
                     h = new Headers();
                     encoded = window.btoa(apiKey);
                     auth = "Basic " + encoded;
