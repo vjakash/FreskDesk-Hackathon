@@ -102,8 +102,8 @@ function prevCurrentPage() {
     getPage();
 }
 function nextCurrentPage() {
-    if ((currentPage + 1) >= (totalTicket / 5)) {
-        currentPage = (totalTicket / 5);
+    if ((currentPage + 1) >= Math.ceil(totalTicket / 5)) {
+        currentPage = Math.ceil(totalTicket / 5);
     }
     else {
         currentPage++;
@@ -131,6 +131,7 @@ function listTicket() {
     return __awaiter(this, void 0, void 0, function () {
         var title, btn1, btn2;
         return __generator(this, function (_a) {
+            currentPage = 1;
             document.getElementById("content").innerHTML = "";
             title = document.getElementById("titleOfMain");
             title.innerHTML = "Tickets";
@@ -156,6 +157,7 @@ function getPage() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log("current page", currentPage);
                     document.getElementById("content").innerHTML = "";
                     status = [".", ".", "Open", "Pending", "Resolved", "Closed"];
                     priority = [".", "Low", "Medium", "High", "Urgent"];

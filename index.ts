@@ -76,8 +76,8 @@ function prevCurrentPage(){
     
 }
 function nextCurrentPage(){
-    if((currentPage+1)>=(totalTicket/5)){
-          currentPage=(totalTicket/5);
+    if((currentPage+1)>=Math.ceil(totalTicket/5)){
+          currentPage=Math.ceil(totalTicket/5);
      }
     else{
          currentPage++;
@@ -108,6 +108,7 @@ function enableDelete(){
 
 }
 async function listTicket() {
+    currentPage=1;
     document.getElementById("content").innerHTML="";
     let title=document.getElementById("titleOfMain");
     title.innerHTML="Tickets";
@@ -126,6 +127,7 @@ async function listTicket() {
   
 }
 async function getPage(){
+    console.log("current page",currentPage)
     document.getElementById("content").innerHTML="";
     let status=[".",".","Open","Pending","Resolved","Closed"];
     let priority=[".","Low","Medium","High","Urgent"];
