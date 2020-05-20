@@ -6,7 +6,7 @@ let apiKey;
 let domainName;
 let totalTicket;
 async function dashBoard(ind){
-    console.log("hi");
+    // console.log("hi");
     if(ind==1){
         apiKey=(<HTMLInputElement>document.getElementById("apikey")).value;
         domainName=(<HTMLInputElement>document.getElementById("domainName")).value;
